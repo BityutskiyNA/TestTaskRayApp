@@ -12,6 +12,9 @@ class DateTimeMixin(models.Model):
 class Images(DateTimeMixin):
     link = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.link
+
 
 class Product(DateTimeMixin):
     type = [
@@ -22,7 +25,7 @@ class Product(DateTimeMixin):
     name = models.CharField(max_length=500)
     article = models.CharField(max_length=10, default='')
     description = models.CharField(max_length=5000)
-    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    images = models.ManyToManyField(Images)
     product_type = models.CharField(max_length=50, choices=type)
     price = models.IntegerField(default=0)
     quantity = models.IntegerField(default=0)
