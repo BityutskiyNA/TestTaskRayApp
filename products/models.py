@@ -25,7 +25,7 @@ class Product(DateTimeMixin):
     name = models.CharField(max_length=500)
     article = models.CharField(max_length=10, default='')
     description = models.CharField(max_length=5000)
-    images = models.ManyToManyField(Images)
+    images = models.ManyToManyField(Images, blank=True)
     product_type = models.CharField(max_length=50, choices=type)
     price = models.IntegerField(default=0)
     quantity = models.IntegerField(default=0)

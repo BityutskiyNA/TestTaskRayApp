@@ -1,33 +1,33 @@
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.views import View
-from django.views.generic import DetailView
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+
+from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
 
 from products.models import Product
-from .serializers import ProductDetailSerializer, ProductsListSerializer, ProductCreateSerializer, \
-    ProductUpdateSerializer, ProductDestroySerializer
 
 
-class ProductListView(ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductsListSerializer
+class ProductListView(LoginRequiredMixin, ListView):
+    model = Product
 
 
-class ProductDetailView(RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductDetailSerializer
+class ProductDetailView(LoginRequiredMixin, DetailView):
+    model = Product
 
 
-class ProductCreateView(CreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductCreateSerializer
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    fields = ('name', 'article', 'description', 'description'
+              , 'product_type', 'price', 'quantity', 'images')
+    success_url = reverse_lazy('products:index')
 
 
-class ProductUpdateView(UpdateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductUpdateSerializer
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    fields = ('name', 'article', 'description', 'description'
+              , 'product_type', 'price', 'quantity', 'images')
+    success_url = reverse_lazy('products:index')
 
-class ProductDeleteView(DestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductDestroySerializer
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    model = Product
+    success_url = reverse_lazy('products:index')

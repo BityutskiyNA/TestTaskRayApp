@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'products',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +49,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'product_catalog.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -85,5 +85,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
