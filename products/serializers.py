@@ -35,15 +35,12 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
-    def is_valid(self, *, raise_exception=False):
-        self._images = self.initial_data.pop('images')
-        return super().is_valid(raise_exception=raise_exception)
-
     def create(self, validated_data):
+        images_data = validated_data.pop('images', [])
         product = Product.objects.create(**validated_data)
 
-        for image in self._images:
-            image_obj, _ = Images.objects.get_or_create(link=image)
+        for image_data in images_data:
+            image_obj, _ = Images.objects.get_or_create(link=image_data)
             product.images.add(image_obj)
 
         product.save()
@@ -64,7 +61,7 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
             , 'product_type', 'price', 'quantity', 'images']
 
     def is_valid(self, *, raise_exception=False):
-        self._images = self.initial_data.pop('images')
+        self._images = self.initial_data.pop('images', [])
         return super().is_valid(raise_exception=raise_exception)
 
     def save(self):

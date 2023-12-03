@@ -18,6 +18,6 @@ urlpatterns = [
     path('api/', APIProductListView.as_view(), name='APIListView'),
     path('api/create/', APIProductCreateView.as_view(), name='APIProductCreate'),
     path('api/<int:pk>/update/', APIProductUpdateView.as_view(), name='APIProductUpdate'),
-    path('api/<int:pk>/view/', APIProductDetailView.as_view(), name='APIProductDetail'),
+    path('api/view/<int:pk>/', APIProductDetailView.as_view(), name='APIProductDetail'),
     path('api/<int:pk>/delete/', APIProductDeleteView.as_view(), name='APIProductDelete'),
 ]
