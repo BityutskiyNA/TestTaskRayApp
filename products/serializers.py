@@ -11,7 +11,7 @@ class ProductsListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    image = serializers.SlugRelatedField(
+    images = serializers.SlugRelatedField(
         many=True,
         read_only=True,
         slug_field='link'
