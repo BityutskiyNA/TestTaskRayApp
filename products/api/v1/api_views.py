@@ -6,26 +6,26 @@ from products.serializers import ProductDetailSerializer, ProductsListSerializer
     ProductUpdateSerializer, ProductDestroySerializer
 
 
-class ProductListView(ListAPIView):
+class APIProductListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductsListSerializer
 
 
-class ProductDetailView(RetrieveAPIView):
+class APIProductDetailView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
 
 
-class ProductCreateView(CreateAPIView):
+class APIProductCreateView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
 
 
-class ProductUpdateView(UpdateAPIView):
+class APIProductUpdateView(UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductUpdateSerializer
 
 
-class ProductDeleteView(DestroyAPIView):
+class APIProductDeleteView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDestroySerializer

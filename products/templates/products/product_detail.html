@@ -11,11 +11,47 @@
                 </div>
                 <div class="card-body">
                     <table class="table">
-                        <tr>раз</tr>
-                        <td>
-                            {{ object.name }}}
-                        </td>
+                        <tr>
+                            <td>Название продукта</td>
+                            <td>{{ object.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Артикул</td>
+                            <td>{{ object.article }}</td>
+                        </tr>
+                            <tr>
+                            <td>Описание</td>
+                            <td>{{ object.description }}</td>
+                        </tr>
+                        <tr>
+                            <td>Тип продукта</td>
+                            <td>{{ object.product_type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Цена</td>
+                            <td>{{ object.price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Количество</td>
+                            <td>{{ object.quantity }}</td>
+                        </tr>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                         Ссылки на изображения
+                     </h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for image in images %}
+                            <li> {{ image }} </li>
+                        {% endfor %}
+                   </ul>
                 </div>
             </div>
         </div>
