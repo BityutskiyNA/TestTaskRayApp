@@ -1,9 +1,20 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    CreateAPIView,
+    UpdateAPIView,
+    DestroyAPIView,
+)
 
 from products.models import Product
 
-from products.serializers import ProductDetailSerializer, ProductsListSerializer, ProductCreateSerializer, \
-    ProductUpdateSerializer, ProductDestroySerializer
+from products.serializers import (
+    ProductDetailSerializer,
+    ProductsListSerializer,
+    ProductCreateSerializer,
+    ProductUpdateSerializer,
+    ProductDestroySerializer,
+)
 
 
 class APIProductListView(ListAPIView):

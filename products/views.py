@@ -8,12 +8,19 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
-from django.views.generic import DetailView, CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import (
+    DetailView,
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView,
+)
 from drf_spectacular.utils import extend_schema
 
 from product_catalog import settings
 from products.models import Product
 from products.services import save_photos
+
 
 @extend_schema(
     description="Получение списка продуктов",
@@ -26,12 +33,13 @@ from products.services import save_photos
 )
 class ProductListView(LoginRequiredMixin, ListView):
     """
-      Класс представления для отображения списка продуктов.
-      Декораторы:
-      - `LoginRequiredMixin`: Требует, чтобы пользователь был аутентифицирован для доступа.
-      Атрибуты:
-      - `model`: Модель для этого представления.
-      """
+    Класс представления для отображения списка продуктов.
+    Декораторы:
+    - `LoginRequiredMixin`: Требует, чтобы пользователь был аутентифицирован для доступа.
+    Атрибуты:
+    - `model`: Модель для этого представления.
+    """
+
     model = Product
 
 
@@ -48,14 +56,15 @@ class ProductListView(LoginRequiredMixin, ListView):
 )
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """
-     Класс представления для просмотра деталей продукта.
-     Подклассы:
-     - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
-     Атрибуты:
-     - `model`: Модель, используемая для получения данных о продукте.
-     Методы:
-     - `get_context_data`: Получает данные контекста для использования в шаблоне представления.
-     """
+    Класс представления для просмотра деталей продукта.
+    Подклассы:
+    - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
+    Атрибуты:
+    - `model`: Модель, используемая для получения данных о продукте.
+    Методы:
+    - `get_context_data`: Получает данные контекста для использования в шаблоне представления.
+    """
+
     model = Product
 
     def get_context_data(self, **kwargs):
@@ -73,7 +82,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
                 cache.set(key, images_list)
         else:
             images_list = self.object.images.all()
-        context_data['images'] = images_list
+        context_data["images"] = images_list
         return context_data
 
 
@@ -90,17 +99,26 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 )
 class ProductCreateView(LoginRequiredMixin, CreateView):
     """
-     Класс представления для создания нового продукта.
-     Подклассы:
-     - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
-     Атрибуты:
-     - `model`: Модель, используемая для создания нового продукта.
-     - `fields`: Поля формы, отображаемые на странице создания.
-     """
+    Класс представления для создания нового продукта.
+    Подклассы:
+    - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
+    Атрибуты:
+    - `model`: Модель, используемая для создания нового продукта.
+    - `fields`: Поля формы, отображаемые на странице создания.
+    """
+
     model = Product
-    fields = ('name', 'article', 'description', 'description'
-              , 'product_type', 'price', 'quantity', 'images')
-    success_url = reverse_lazy('products:index')
+    fields = (
+        "name",
+        "article",
+        "description",
+        "description",
+        "product_type",
+        "price",
+        "quantity",
+        "images",
+    )
+    success_url = reverse_lazy("products:index")
 
 
 @extend_schema(
@@ -117,17 +135,27 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 )
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
-       Класс представления для обновления данных продукта.
-       Подклассы:
-       - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
-       Атрибуты:
-       - `model`: Модель, используемая для обновления данных продукта.
-       - `fields`: Поля формы, отображаемые на странице обновления.
+    Класс представления для обновления данных продукта.
+    Подклассы:
+    - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
+    Атрибуты:
+    - `model`: Модель, используемая для обновления данных продукта.
+    - `fields`: Поля формы, отображаемые на странице обновления.
     """
+
     model = Product
-    fields = ('name', 'article', 'description', 'description'
-              , 'product_type', 'price', 'quantity', 'images')
-    success_url = reverse_lazy('products:index')
+    fields = (
+        "name",
+        "article",
+        "description",
+        "description",
+        "product_type",
+        "price",
+        "quantity",
+        "images",
+    )
+    success_url = reverse_lazy("products:index")
+
 
 @extend_schema(
     description="Удаление продукта",
@@ -142,22 +170,23 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 )
 class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """
-      Класс представления для удаления продукта.
-      Подклассы:
-      - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
-      - `PermissionRequiredMixin`: Обеспечивает, что пользователь имеет необходимые разрешения.
-      Атрибуты:
-      - `model`: Модель, используемая для удаления продукта.
-      - `success_url`: URL для перенаправления после успешного удаления.
-      - `permission_required`: Разрешение, необходимое для доступа к этой странице.
+    Класс представления для удаления продукта.
+    Подклассы:
+    - `LoginRequiredMixin`: Обеспечивает, что только аутентифицированные пользователи могут видеть эту страницу.
+    - `PermissionRequiredMixin`: Обеспечивает, что пользователь имеет необходимые разрешения.
+    Атрибуты:
+    - `model`: Модель, используемая для удаления продукта.
+    - `success_url`: URL для перенаправления после успешного удаления.
+    - `permission_required`: Разрешение, необходимое для доступа к этой странице.
 
-      """
+    """
+
     model = Product
-    success_url = reverse_lazy('products:index')
-    permission_required = 'products.delite.product'
+    success_url = reverse_lazy("products:index")
+    permission_required = "products.delite.product"
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 @extend_schema(
     description="Обновление изображений продуктов",
     summary="Обновление изображений продуктов",
@@ -177,9 +206,12 @@ class ImageUpdateView(View):
     - `get_product_names_list`: Получает список названий продуктов для обновления изображений.
     - `post`: Обработчик POST-запроса для обновления изображений продуктов.
     """
+
     @sync_to_async
     def get_product_names_list(self):
-        return list(Product.objects.filter(images__link__isnull=True).values('id', 'name'))
+        return list(
+            Product.objects.filter(images__link__isnull=True).values("id", "name")
+        )
 
     async def post(self, request, *args, **kwargs):
         search_queries = await self.get_product_names_list()

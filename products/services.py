@@ -20,17 +20,16 @@ def add_image_to_product_async(product_id, new_link):
 
 
 async def search_photos(query):
-    url = 'https://api.unsplash.com/search/photos/'
-    headers = {'Authorization': f'Client-ID {app_settings.access_key}'}
-    params = {'query': query['name'], 'per_page': 1}
+    url = "https://api.unsplash.com/search/photos/"
+    headers = {"Authorization": f"Client-ID {app_settings.access_key}"}
+    params = {"query": query["name"], "per_page": 1}
 
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url, headers=headers, params=params,
-                                        timeout=5)
+            response = await client.get(url, headers=headers, params=params, timeout=5)
             if response.status_code == 200:
                 data = response.json()
-                data['query'] = query
+                data["query"] = query
                 return data
             else:
                 return None
@@ -43,7 +42,9 @@ async def save_photos(search_queries):
     results = await asyncio.gather(*tasks)
 
     for result in results:
-        if result and result['results'] != []:
-            photo = result['results'][0]
-            print(photo['urls']['regular'])
-            await add_image_to_product_async(result['query']['id'], photo['urls']['regular'])
+        if result and result["results"] != []:
+            photo = result["results"][0]
+            print(photo["urls"]["regular"])
+            await add_image_to_product_async(
+                result["query"]["id"], photo["urls"]["regular"]
+            )

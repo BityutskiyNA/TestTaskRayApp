@@ -6,37 +6,29 @@ from products.models import Product, Images
 class ProductsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'article', 'description',
-                  'product_type', 'price']
+        fields = ["id", "name", "article", "description", "product_type", "price"]
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    images = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='link'
-    )
+    images = serializers.SlugRelatedField(many=True, read_only=True, slug_field="link")
 
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     images = serializers.SlugRelatedField(
-        required=False,
-        many=True,
-        queryset=Images.objects.all(),
-        slug_field='link'
+        required=False, many=True, queryset=Images.objects.all(), slug_field="link"
     )
 
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = "__all__"
 
     def create(self, validated_data):
-        images_data = validated_data.pop('images', [])
+        images_data = validated_data.pop("images", [])
         product = Product.objects.create(**validated_data)
 
         for image_data in images_data:
@@ -49,19 +41,25 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 
 class ProductUpdateSerializer(serializers.ModelSerializer):
     images = serializers.SlugRelatedField(
-        required=False,
-        many=True,
-        queryset=Images.objects.all(),
-        slug_field='link'
+        required=False, many=True, queryset=Images.objects.all(), slug_field="link"
     )
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'article', 'description', 'description'
-            , 'product_type', 'price', 'quantity', 'images']
+        fields = [
+            "id",
+            "name",
+            "article",
+            "description",
+            "description",
+            "product_type",
+            "price",
+            "quantity",
+            "images",
+        ]
 
     def is_valid(self, *, raise_exception=False):
-        self._images = self.initial_data.pop('images', [])
+        self._images = self.initial_data.pop("images", [])
         return super().is_valid(raise_exception=raise_exception)
 
     def save(self):
@@ -78,4 +76,4 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
 class ProductDestroySerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id']
+        fields = ["id"]
