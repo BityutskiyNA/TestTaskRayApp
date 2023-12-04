@@ -16,6 +16,7 @@ redis = "^5.0.1"
 drf-spectacular = "^0.26.5"
 pytest-django = "^4.7.0"
 pytest-factoryboy = "^2.6.0"
+gunicorn = "^21.2.0"
 
 
 [build-system]

@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -5,6 +6,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rjjxxl(6q+fh3zi@e6q9b@ylpo=6#co+t-h4yh5##pxp-qkc9r'
 
 DEBUG = True
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# URL, по которому будут доступны статические файлы
+STATIC_URL = '/static/'
 
 ALLOWED_HOSTS = []
 
@@ -58,7 +63,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }
