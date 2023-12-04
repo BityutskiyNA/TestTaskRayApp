@@ -1,9 +1,11 @@
 import os
 from pathlib import Path
 
+from config import app_settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-rjjxxl(6q+fh3zi@e6q9b@ylpo=6#co+t-h4yh5##pxp-qkc9r'
+SECRET_KEY = app_settings.secret_key
 
 DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -60,11 +62,11 @@ WSGI_APPLICATION = 'product_catalog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'postgres',
-        'PORT': '5432',
+        'NAME': app_settings.postgres_db,
+        'USER': app_settings.postgres_user,
+        'PASSWORD': app_settings.postgres_password,
+        'HOST': app_settings.postgres_host,
+        'PORT': app_settings.postgres_port,
     }
 }
 
@@ -116,6 +118,6 @@ if CACHES_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "LOCATION": f"redis://{app_settings.redis_host}:{app_settings.redis_port}",
         }
     }
